@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 //Setting up mysql connection
-const db = mysql.createConnection({
+const connection = mysql.createConnection({
     host: 'c237-adib-mysql.mysql.database.azure.com',
     user: 'c237_021',
     password: 'c237021@2026!',
@@ -28,20 +28,21 @@ const db = mysql.createConnection({
     }
 });
 
+// Connect to the database
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+    return;
+  }
+  console.log('Connected to the MySQL database!');
+});
+
 // const connection = mysql.createConnection({
 //     host: 'localhost',
 //     user: 'root',
 //     password: 'RP738964$',
 //     database: 'c237_supermarketdb'
 //   });
-
-connection.connect((err) => {
-    if (err) {
-        console.error('Error connecting to MySQL:', err);
-        return;
-    }
-    console.log('Connected to MySQL database');
-});
 
 // Set up view engine
 app.set('view engine', 'ejs');
